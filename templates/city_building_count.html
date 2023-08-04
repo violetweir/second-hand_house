@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN" style="height: 100%">
+  <head>
+    <meta charset="utf-8">
+    <title>成都二手房信息分析——矩形树图</title>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/nav.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='font/iconfont.css')}}">
+    <script type="text/javascript" src="{{url_for('static',filename='js/jquery.min.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static',filename='js/nav.js')}}"></script>
+    </head>
+<body>
+	<div class="nav">
+		<div class="nav-top">
+			<div id="mini" style="border-bottom:1px solid rgba(255,255,255,.1)"><img src="{{url_for('static',filename='img/mini.png')}}"> </div>
+		</div>
+		<ul>
+			<li class="nav-item">
+				<a href="javascript:;"><i class="my-icon nav-icon icon_1"></i><span>基本信息统计</span><i class="my-icon nav-more"></i></a>
+				<ul>
+					<li><a href="{{ url_for('city_tranavg') }}"><span>各区二手房均价</span></a></li>
+					<li><a href="{{ url_for('city_type_tranavg') }}"><span>各区建筑类型均价</span></a></li>
+					<li><a href="{{ url_for('city_building_count') }}"><span>各区建筑结构数量</span></a></li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+  <div style="text-align:center;margin:-650px 0; font:normal 24px/24px 'MicroSoft YaHei'; position:relative"></div>
+  <div id="container" style="position:absolute;top:0; left:0; bottom:0; right:0;margin:0 auto;width:1250px;height:650px;"></div>
+  <script type="text/javascript" src="{{url_for('static',filename='js/echarts.min.js')}}"></script>
+  <script type="text/javascript">
+    var dom = document.getElementById('container');
+    var myChart = echarts.init(dom, null, {
+      renderer: 'canvas',
+      useDirtyRect: false
+    });
+    var app = {};
+    
+    var option;
+
+    option = {
+      title: {
+		text: '建筑结构数量统计矩形树图',
+		align: 'left', // 设置水平对齐方式为左对齐
+        left: 100, // 设置距离容器左侧的距离为10px
+        top: 10 // 设置距离容器顶部的距离为10px
+	  },
+  series: [
+    {
+      type: 'treemap',
+      data: {{ treemap_data | tojson }},
+      visualDimension: 0,
+      levels: [
+        {
+          itemStyle: {
+            borderColor: '#000',
+            borderWidth: 0,
+            gapWidth: 1,
+          }
+        },
+        {
+          itemStyle: {
+            borderColor: '#fff',
+            borderWidth: 2,
+            gapWidth: 1,
+	
+          },
+          emphasis: {
+            itemStyle: {
+              borderColor: '#fff',
+              borderWidth: 4
+            }
+          }
+        }
+      ],
+      leafDepth: 1,
+      label: {
+        show: true,
+        color: '#000',
+        position: 'inside',
+        formatter: '{b}\n{c}'
+      },
+    }
+  ]
+};
+
+    if (option && typeof option === 'object') {
+      myChart.setOption(option);
+    }
+
+    window.addEventListener('resize', myChart.resize);
+  </script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>成都二手房信息分析</title>
+<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/nav.css')}}">
+<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='font/iconfont.css')}}">
+<script type="text/javascript" src="{{url_for('static',filename='js/jquery.min.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static',filename='js/nav.js')}}"></script>
+</head>
+<body>
+	<div class="nav">
+		<div class="nav-top">
+			<div id="mini" style="border-bottom:1px solid rgba(255,255,255,.1)"><img src="{{url_for('static',filename='img/mini.png')}}"> </div>
+		</div>
+		<ul>
+			<li class="nav-item">
+				<a href="javascript:;"><i class="my-icon nav-icon icon_1"></i><span>基本信息统计</span><i class="my-icon nav-more"></i></a>
+				<ul>
+					<li><a href="{{ url_for('city_tranavg') }}"><span>各区二手房均价</span></a></li>
+					<li><a href="{{ url_for('city_type_tranavg') }}"><span>各区建筑类型均价</span></a></li>
+					<li><a href="{{ url_for('city_building_count') }}"><span>各区建筑结构数量</span></a></li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+
+	<div style="text-align:center;margin:-650px 0; font:normal 24px/24px 'MicroSoft YaHei';">
+		<p>成都二手房信息分析</p>
+		<img src="{{url_for('static',filename='img/logo.png')}}" width="550" height="550">
+	</div>
+</body>
+</html>
